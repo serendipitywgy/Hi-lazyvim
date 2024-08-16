@@ -6,8 +6,8 @@ vim.keymap.set("i", "kj", "<Esc>", { silent = true })
 vim.keymap.set("t", "kj", "<C-\\><C-n>", { silent = true })
 
 -- 在 ~/.config/nvim/lua/config/keymaps.lua 中
-local overseer = require("overseer")
-local function run_conan_build()
-  overseer.run_template({ name = "conan build" })
-end
-vim.keymap.set({ "n", "i", "v" }, "<F5>", run_conan_build, { desc = "Run Conan Build" })
+-- local overseer = require("overseer")
+-- local function run_conan_build()
+--   overseer.run_template({ name = "conan build" })
+-- end
+-- vim.keymap.set({ "n", "i", "v" }, "<F5>", run_conan_build, { desc = "Run Conan Build" })
