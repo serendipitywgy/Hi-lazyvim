@@ -27,7 +27,9 @@ return {
     event = "VeryLazy",
     version = "*",
     config = function()
-      require("toggleterm").setup()
+      require("toggleterm").setup({
+        close_on_exit = false, -- 防止命令执行完毕后自动关闭
+      })
 
       local Terminal = require("toggleterm.terminal").Terminal
       local fs = vim.fs
