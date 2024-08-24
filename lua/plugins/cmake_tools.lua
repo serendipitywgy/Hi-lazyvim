@@ -20,8 +20,8 @@ return {
         end
         return "build/${variant:buildType}"
       end, -- this is used to specify generate directory for cmake, allows macro expansion, can be a string or a function returning the string, relative to cwd.
-      cmake_soft_link_compile_commands = true, -- this will automatically make a soft link from compile commands file to project root dir
-      cmake_compile_commands_from_lsp = false, -- this will automatically set compile commands file location using lsp, to use it, please set `cmake_soft_link_compile_commands` to false
+      cmake_soft_link_compile_commands = false, -- this will automatically make a soft link from compile commands file to project root dir
+      cmake_compile_commands_from_lsp = true, -- this will automatically set compile commands file location using lsp, to use it, please set `cmake_soft_link_compile_commands` to false
       cmake_kits_path = nil, -- this is used to specify global cmake kits path, see CMakeKits for detailed usage
       cmake_variants_message = {
         short = { show = true }, -- whether to show short message
@@ -54,17 +54,17 @@ return {
             singleton = true, -- single instance, autocloses the opened one, if present
           },
           overseer = {
-            new_task_opts = {
-              strategy = {
-                "toggleterm",
-                direction = "horizontal",
-                autos_croll = true,
-                quit_on_exit = "success",
-              },
-            }, -- options to pass into the `overseer.new_task` command
-            on_new_task = function(task)
-              require("overseer").open({ enter = false, direction = "right" })
-            end, -- a function that gets overseer.Task when it is created, before calling `task:start`
+            -- new_task_opts = {
+            --   strategy = {
+            --     "toggleterm",
+            --     direction = "horizontal",
+            --     autos_croll = true,
+            --     quit_on_exit = "success",
+            --   },
+            -- }, -- options to pass into the `overseer.new_task` command
+            -- on_new_task = function(task)
+            --   require("overseer").open({ enter = false, direction = "right" })
+            -- end, -- a function that gets overseer.Task when it is created, before calling `task:start`
           },
           terminal = {
             name = "CMake Terminal",
@@ -103,21 +103,21 @@ return {
             singleton = true, -- single instance, autocloses the opened one, if present
           },
           overseer = {
-            new_task_opts = {
-              strategy = {
-                "toggleterm",
-                direction = "horizontal",
-                autos_croll = true,
-                quit_on_exit = "success",
-              },
-            }, -- options to pass into the `overseer.new_task` command
-            on_new_task = function(task) end, -- a function that gets overseer.Task when it is created, before calling `task:start`
+            -- new_task_opts = {
+            --   strategy = {
+            --     "toggleterm",
+            --     direction = "horizontal",
+            --     autos_croll = true,
+            --     quit_on_exit = "success",
+            --   },
+            -- }, -- options to pass into the `overseer.new_task` command
+            -- on_new_task = function(task) end, -- a function that gets overseer.Task when it is created, before calling `task:start`
           },
           terminal = {
-            name = "Main Terminal",
+            name = "CMake Terminal",
             prefix_name = "[CMakeTools]: ", -- This must be included and must be unique, otherwise the terminals will not work. Do not use a simple spacebar " ", or any generic name
             split_direction = "horizontal", -- "horizontal", "vertical"
-            split_size = 11,
+            split_size = 6,
 
             -- Window handling
             single_terminal_per_instance = true, -- Single viewport, multiple windows
