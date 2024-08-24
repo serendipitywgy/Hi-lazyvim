@@ -37,6 +37,7 @@ return {
       },
       cmake_executor = { -- executor to use
         name = "quickfix", -- name of the executor
+        -- name = "toggleterm", -- name of the executor
         opts = {}, -- the options the executor will get, possible values depend on the executor type. See `default_opts` for possible values.
         default_opts = { -- a list of default and possible values for executors
           quickfix = {
@@ -47,10 +48,10 @@ return {
             auto_close_when_success = true, -- typically, you can use it with the "always" option; it will auto-close the quickfix buffer if the execution is successful.
           },
           toggleterm = {
-            direction = "horizontal", -- 'vertical' | 'horizontal' | 'tab' | 'float'
-            close_on_exit = false, -- whether close the terminal when exit
+            direction = "float", -- 'vertical' | 'horizontal' | 'tab' | 'float'
+            close_on_exit =true, -- whether close the terminal when exit
             auto_scroll = true, -- whether auto scroll to the bottom
-            -- singleton = true, -- single instance, autocloses the opened one, if present
+            singleton = true, -- single instance, autocloses the opened one, if present
           },
           overseer = {
             new_task_opts = {
