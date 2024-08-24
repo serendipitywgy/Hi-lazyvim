@@ -53,17 +53,17 @@ return {
             -- singleton = true, -- single instance, autocloses the opened one, if present
           },
           overseer = {
-            -- new_task_opts = {
-            --   strategy = {
-            --     "toggleterm",
-            --     direction = "horizontal",
-            --     autos_croll = true,
-            --     quit_on_exit = "success",
-            --   },
-            -- }, -- options to pass into the `overseer.new_task` command
-            -- on_new_task = function(task)
-            --   require("overseer").open({ enter = false, direction = "right" })
-            -- end, -- a function that gets overseer.Task when it is created, before calling `task:start`
+            new_task_opts = {
+              strategy = {
+                "toggleterm",
+                direction = "horizontal",
+                autos_croll = true,
+                quit_on_exit = "success",
+              },
+            }, -- options to pass into the `overseer.new_task` command
+            on_new_task = function(task)
+              require("overseer").open({ enter = false, direction = "right" })
+            end, -- a function that gets overseer.Task when it is created, before calling `task:start`
           },
           terminal = {
             name = "CMake Terminal",
@@ -102,15 +102,15 @@ return {
             singleton = true, -- single instance, autocloses the opened one, if present
           },
           overseer = {
-            -- new_task_opts = {
-            --   strategy = {
-            --     "toggleterm",
-            --     direction = "horizontal",
-            --     autos_croll = true,
-            --     quit_on_exit = "success",
-            --   },
-            -- }, -- options to pass into the `overseer.new_task` command
-            -- on_new_task = function(task) end, -- a function that gets overseer.Task when it is created, before calling `task:start`
+            new_task_opts = {
+              strategy = {
+                "toggleterm",
+                direction = "horizontal",
+                autos_croll = true,
+                quit_on_exit = "success",
+              },
+            }, -- options to pass into the `overseer.new_task` command
+            on_new_task = function(task) end, -- a function that gets overseer.Task when it is created, before calling `task:start`
           },
           terminal = {
             name = "Main Terminal",
