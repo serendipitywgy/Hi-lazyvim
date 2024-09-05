@@ -6,7 +6,7 @@ local opt = vim.opt
 opt.autoindent = true
 
 opt.wrap = true -- 启用自动换行
-opt.colorcolumn = "81" -- 在第81列显示垂直线，用于提示代码宽度
+opt.colorcolumn = "102" -- 在第81列显示垂直线，用于提示代码宽度
 opt.cursorline = true -- 高亮当前行
 opt.ignorecase = true -- 搜索时忽略大小写
 opt.smartcase = true -- 如果搜索包含大写字母，则变为大小写敏感
