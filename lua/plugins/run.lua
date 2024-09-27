@@ -56,20 +56,29 @@ return {
 
       -- 编译和运行 C++ 文件的函数
       local function compile_and_run_cpp()
-        local file = vim.fn.expand("%:p")
         local cwd = vim.fn.getcwd()
         local output_dir = "build"
-        local output = vim.fn.fnamemodify(file, ":t:r") -- 获取文件名（不含路径和扩展名）
+        local output = vim.fn.fnamemodify(vim.fn.expand("%:t:r"), ":t:r") -- 获取文件名（不含路径和扩展名）
         local output_path = output_dir .. "/" .. output
 
         -- 确保 build 目录存在
         vim.fn.mkdir(output_dir, "p")
 
-        local cmd =
-          string.format("cd %s && rm -f %s && g++ %s -o %s && ./%s", cwd, output_path, file, output_path, output_path)
+        -- 查找当前目录下的所有 .cpp 文件
+        local cpp_files = vim.fn.globpath(cwd, "*.cpp", false, true)
+        local files_to_compile = table.concat(cpp_files, " ")
+
+        local cmd = string.format(
+          "cd %s && rm -f %s && g++ %s -o %s && ./%s",
+          cwd,
+          output_path,
+          files_to_compile,
+          output_path,
+          output_path
+        )
 
         -- 添加日志信息
-        -- print("File to compile: " .. file)
+        -- print("Files to compile: " .. files_to_compile)
         -- print("Output executable: " .. output_path)
         -- print("Command to run: " .. cmd)
 
