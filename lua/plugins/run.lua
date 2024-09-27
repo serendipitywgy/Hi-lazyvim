@@ -54,7 +54,31 @@ return {
 
       local conan_build = create_build_terminal("conan build . -pr:h=debug -pr:b=debug")
 
+      -- 编译和运行 C++ 文件的函数
+      local function compile_and_run_cpp()
+        local file = vim.fn.expand("%:p")
+        local cwd = vim.fn.getcwd()
+        local output_dir = "build"
+        local output = vim.fn.fnamemodify(file, ":t:r") -- 获取文件名（不含路径和扩展名）
+        local output_path = output_dir .. "/" .. output
+
+        -- 确保 build 目录存在
+        vim.fn.mkdir(output_dir, "p")
+
+        local cmd =
+          string.format("cd %s && rm -f %s && g++ %s -o %s && ./%s", cwd, output_path, file, output_path, output_path)
+
+        -- 添加日志信息
+        -- print("File to compile: " .. file)
+        -- print("Output executable: " .. output_path)
+        -- print("Command to run: " .. cmd)
+
+        local gpp_build = create_build_terminal(cmd)
+        gpp_build:toggle()
+      end
+
       function _G.smart_build()
+        vim.cmd("wa")
         local cwd = vim.fn.getcwd()
         local has_conanfile = fs.find("conanfile.py", { path = cwd, upward = true, type = "file" })[1] ~= nil
         local has_cmakelist = fs.find("CMakeLists.txt", { path = cwd, upward = true, type = "file" })[1] ~= nil
@@ -65,7 +89,9 @@ return {
           -- 使用 CMake Tools 插件的命令
           vim.cmd("CMakeRun")
         else
-          print("No conanfile.py or CMakeLists.txt found in the project directory.")
+          -- print("No conanfile.py or CMakeLists.txt found in the project directory.")
+          -- 编译和运行 C++ 文件
+          compile_and_run_cpp()
         end
       end
       -- 简化在多个 Vim 模式下设置相同键位映射的过程
