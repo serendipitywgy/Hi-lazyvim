@@ -69,7 +69,7 @@ return {
         local files_to_compile = table.concat(cpp_files, " ")
 
         local cmd = string.format(
-          "cd %s && rm -f %s && g++ %s -o %s && ./%s",
+          "cd %s && rm -f %s && g++ -g %s -o %s && ./%s",
           cwd,
           output_path,
           files_to_compile,
