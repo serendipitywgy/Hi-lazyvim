@@ -41,6 +41,7 @@ return {
           direction = "float",
           float_opts = {
             border = "double",
+            width = 110,
           },
           on_open = function(term)
             vim.cmd("startinsert!")
@@ -69,14 +70,26 @@ return {
         # 设置编译选项
         set(CMAKE_CXX_FLAGS_DEBUG "-g -O1 -Wall -Wextra -Werror")
         set(CMAKE_BUILD_TYPE Debug)
+        set(CMAKE_EXPORT_COMPILE_COMMANDS ON)   #生成并链接 compile_commands.json 文件，这对于代码分析工具和 IDE 非常有用
 
+        # 在配置阶段创建软链接
+        file(CREATE_LINK
+            "${CMAKE_BINARY_DIR}/compile_commands.json"
+            "${CMAKE_SOURCE_DIR}/compile_commands.json"
+            SYMBOLIC
+        )
         file(GLOB SOURCES "*.cpp")
         add_executable(]] .. output .. [[ ${SOURCES})
         ]]
 
         local cwd = vim.fn.getcwd()
         local cmake_file_path = cwd .. "/CMakeLists.txt"
-        local cmake_file = io.open(cmake_file_path, "w")
+        local cmake_file, err = io.open(cmake_file_path, "w")
+        if not cmake_file then
+          print("Error opening file: " .. err)
+          return
+        end
+
         cmake_file:write(cmake_content)
         cmake_file:close()
       end
@@ -85,15 +98,15 @@ return {
       local function compile_and_run_cpp()
         local cwd = vim.fn.getcwd()
         local output_dir = "build"
-        local output = sanitize_filename(vim.fn.fnamemodify(path, ":t:r")) -- 获取文件名（不含路径和扩展名）
+        -- local output = sanitize_filename(vim.fn.fnamemodify(vim.fn.expand("%:t:r"), ":t:r")) -- 获取文件名（不含路径和扩展名）
+        local output = vim.fn.fnamemodify(cwd, ":t") -- 获取当前文件夹名字作为项目名
+        print("projectName:", output)
 
         -- 确保 build 目录存在
         vim.fn.mkdir(output_dir, "p")
         -- 生成 CMakeLists.txt 文件
         print("CMakeLists.txt_path: ", output)
         generate_cmake_file(output)
-
-        -- 查找当前目录下的所有 .cpp 文件
 
         local cmd = string.format(
           "cd %s && cmake -B %s -S . && cmake --build %s && ./%s/%s",
@@ -103,11 +116,6 @@ return {
           output_dir,
           output
         )
-
-        -- 添加日志信息
-        -- print("Files to compile: " .. files_to_compile)
-        -- print("Output executable: " .. output_path)
-        -- print("Command to run: " .. cmd)
 
         local gpp_build = create_build_terminal(cmd)
         gpp_build:toggle()
