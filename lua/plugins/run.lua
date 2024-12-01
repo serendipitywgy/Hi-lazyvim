@@ -54,27 +54,54 @@ return {
 
       local conan_build = create_build_terminal("conan build . -pr:h=debug -pr:b=debug")
 
+      local function sanitize_filename(filename)
+        -- 去除路径中的特殊字符和空格
+        return filename:gsub("[^%w_]", "_")
+      end
+
+      local function generate_cmake_file(output)
+        local cmake_content = [[
+        cmake_minimum_required(VERSION 3.10)
+        project(MyProject)
+
+        set(CMAKE_CXX_STANDARD 17)
+
+        # 设置编译选项
+        set(CMAKE_CXX_FLAGS_DEBUG "-g -O1 -Wall -Wextra -Werror")
+        set(CMAKE_BUILD_TYPE Debug)
+
+        file(GLOB SOURCES "*.cpp")
+        add_executable(]] .. output .. [[ ${SOURCES})
+        ]]
+
+        local cwd = vim.fn.getcwd()
+        local cmake_file_path = cwd .. "/CMakeLists.txt"
+        local cmake_file = io.open(cmake_file_path, "w")
+        cmake_file:write(cmake_content)
+        cmake_file:close()
+      end
+
       -- 编译和运行 C++ 文件的函数
       local function compile_and_run_cpp()
         local cwd = vim.fn.getcwd()
         local output_dir = "build"
-        local output = vim.fn.fnamemodify(vim.fn.expand("%:t:r"), ":t:r") -- 获取文件名（不含路径和扩展名）
-        local output_path = output_dir .. "/" .. output
+        local output = sanitize_filename(vim.fn.fnamemodify(path, ":t:r")) -- 获取文件名（不含路径和扩展名）
 
         -- 确保 build 目录存在
         vim.fn.mkdir(output_dir, "p")
+        -- 生成 CMakeLists.txt 文件
+        print("CMakeLists.txt_path: ", output)
+        generate_cmake_file(output)
 
         -- 查找当前目录下的所有 .cpp 文件
-        local cpp_files = vim.fn.globpath(cwd, "*.cpp", false, true)
-        local files_to_compile = table.concat(cpp_files, " ")
 
         local cmd = string.format(
-          "cd %s && rm -f %s && g++ -g %s -o %s && ./%s",
+          "cd %s && cmake -B %s -S . && cmake --build %s && ./%s/%s",
           cwd,
-          output_path,
-          files_to_compile,
-          output_path,
-          output_path
+          output_dir,
+          output_dir,
+          output_dir,
+          output
         )
 
         -- 添加日志信息
@@ -96,7 +123,8 @@ return {
           conan_build:toggle()
         elseif has_cmakelist then
           -- 使用 CMake Tools 插件的命令
-          vim.cmd("CMakeRun")
+          -- vim.cmd("CMakeRun")
+          compile_and_run_cpp()
         else
           -- print("No conanfile.py or CMakeLists.txt found in the project directory.")
           -- 编译和运行 C++ 文件
