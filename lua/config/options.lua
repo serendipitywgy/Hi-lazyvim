@@ -39,3 +39,14 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.b.autoformat = false
   end,
 })
+
+-- 定义一个函数来搜索当前选中的单词
+function SearchSelectedWord()
+  local word = vim.fn.expand("<cword>")
+  if word ~= "" then
+    vim.cmd("/" .. word)
+  end
+end
+
+-- 绑定 / 键到上面的函数
+vim.api.nvim_set_keymap("v", "/", ":<C-u>lua SearchSelectedWord()<CR>", { noremap = true, silent = true })
