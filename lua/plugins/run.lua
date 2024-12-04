@@ -29,36 +29,32 @@ return {
     config = function()
       require("toggleterm").setup({
         close_on_exit = false, -- 防止命令执行完毕后自动关闭
+        shade_terminals = false, -- 禁用终端窗口的阴影效果
       })
 
       local Terminal = require("toggleterm.terminal").Terminal
       local fs = vim.fs
 
-      local function create_build_terminal(cmd)
+      local function create_build_terminal(cmd, direction, float_opts)
         return Terminal:new({
           cmd = cmd,
           hidden = true,
-          direction = "float",
-          float_opts = {
-            border = "double",
-            width = 110,
-          },
+          direction = direction,
+          float_opts = float_opts,
           on_open = function(term)
             vim.cmd("startinsert!")
             vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+            -- vim.wo[term.window].winblend = 20 -- 设置终端窗口的透明度
           end,
           on_close = function(_)
             vim.cmd("startinsert!")
           end,
         })
       end
-
-      local conan_build = create_build_terminal("conan build . -pr:h=debug -pr:b=debug")
-
-      local function sanitize_filename(filename)
-        -- 去除路径中的特殊字符和空格
-        return filename:gsub("[^%w_]", "_")
-      end
+      local conan_build = create_build_terminal("conan build . -pr:h=debug -pr:b=debug", "float", {
+        border = "double",
+        width = 110,
+      })
 
       local function generate_cmake_file(output)
         local cmake_content = [[
@@ -114,17 +110,34 @@ return {
         else
           print("CMakeLists.txt is already exist!")
         end
-        local cmd = string.format(
-          "cd %s && cmake -B %s -S . && cmake --build %s && ./%s/%s",
-          cwd,
-          output_dir,
-          output_dir,
-          output_dir,
-          output
-        )
+        local compile_cmd = string.format("cd %s && cmake -B %s -S . && cmake --build %s", cwd, output_dir, output_dir)
+        local run_cmd = string.format("cd %s && ./%s/%s", cwd, output_dir, output)
 
-        local gpp_build = create_build_terminal(cmd)
-        gpp_build:toggle()
+        local compile_terminal = create_build_terminal(compile_cmd, "horizontal", {
+          border = "double",
+          width = vim.o.columns,
+          height = 10,
+        })
+        local run_terminal = create_build_terminal(run_cmd, "float", {
+          border = "double",
+          width = math.floor(vim.o.columns * 0.2), -- 设置为当前编辑器窗口宽度的30%
+          height = vim.o.lines - 2, -- 设置为当前编辑器窗口高度，减去边框的高度
+          row = 1, -- 从顶部开始
+          col = vim.o.columns - math.floor(vim.o.columns * 0.2) - 1, -- 从右侧开始
+        })
+
+        compile_terminal:toggle()
+        -- 使用 vim.fn.jobstart 来启动编译命令，并在编译完成后关闭编译终端并打开运行终端
+        vim.fn.jobstart(compile_cmd, {
+          on_exit = function(_, exit_code)
+            if exit_code == 0 then
+              compile_terminal:close()
+              run_terminal:toggle()
+            else
+              print("Compilation failed with exit code:", exit_code)
+            end
+          end,
+        })
       end
 
       function _G.smart_build()
