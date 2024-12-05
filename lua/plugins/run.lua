@@ -118,7 +118,13 @@ return {
           width = vim.o.columns,
           height = 10,
         })
-        local run_terminal = create_build_terminal(run_cmd, "float", {
+
+        -- 检查是否已经存在运行终端，如果存在则关闭它
+        if _G.run_terminal and _G.run_terminal:is_open() then
+          _G.run_terminal:close()
+        end
+
+        _G.run_terminal = create_build_terminal(run_cmd, "float", {
           border = "double",
           width = math.floor(vim.o.columns * 0.2), -- 设置为当前编辑器窗口宽度的30%
           height = vim.o.lines - 2, -- 设置为当前编辑器窗口高度，减去边框的高度
@@ -132,7 +138,7 @@ return {
           on_exit = function(_, exit_code)
             if exit_code == 0 then
               compile_terminal:close()
-              run_terminal:toggle()
+              _G.run_terminal:toggle()
             else
               print("Compilation failed with exit code:", exit_code)
             end
