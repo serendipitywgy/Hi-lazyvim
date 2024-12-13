@@ -1,8 +1,8 @@
 local catppuccin_config = {
-  flavour = "auto", -- 选择主题风格，可以是 "latte"（浅色），"frappe"（中等深色），"macchiato"（深色），"mocha"（最深色）。"auto" 会根据背景自动选择风格。
+  flavour = "macchiato", -- 选择主题风格，可以是 "latte"（浅色），"frappe"（中等深色），"macchiato"（深色），"mocha"（最深色）。"auto" 会根据背景自动选择风格。
   background = { -- 背景类型配置
     light = "latte", -- 浅色背景时使用 "latte" 风格
-    dark = "mocha", -- 深色背景时使用 "mocha" 风格
+    dark = "macchiato", -- 深色背景时使用 "mocha" 风格
   },
   transparent_background = true, -- 设置背景透明
   show_end_of_buffer = false, -- 在缓冲区结束后显示 '~' 字符
@@ -39,11 +39,12 @@ local catppuccin_config = {
       custom_highlights = function(colors)
         local u = require("catppuccin.utils.colors")
         return {
-          CursorLineNr = { bg = u.blend(colors.overlay0, colors.base, 0.75), style = { "bold" } },
-          CursorLine = { bg = u.blend(colors.overlay0, colors.base, 0.45) },
-          LspReferenceText = { bg = colors.surface2 },
-          LspReferenceWrite = { bg = colors.surface2 },
-          LspReferenceRead = { bg = colors.surface2 },
+          CursorLineNr = { bg = u.blend(colors.overlay0, colors.base, 0.9), style = { "bold" } },
+          CursorLine = { bg = u.blend(colors.overlay0, colors.base, 0.6) },
+          -- 使用更亮的颜色来突出 LspReferenceText、LspReferenceWrite 和 LspReferenceRead
+          LspReferenceText = { bg = u.blend(colors.surface2, colors.base, 0.8) },
+          LspReferenceWrite = { bg = u.blend(colors.surface2, colors.base, 0.8) },
+          LspReferenceRead = { bg = u.blend(colors.surface2, colors.base, 0.8) },
         }
       end,
     })
