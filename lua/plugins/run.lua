@@ -96,19 +96,19 @@ return {
         local output_dir = "build"
         -- local output = sanitize_filename(vim.fn.fnamemodify(vim.fn.expand("%:t:r"), ":t:r")) -- 获取文件名（不含路径和扩展名）
         local output = vim.fn.fnamemodify(cwd, ":t") -- 获取当前文件夹名字作为项目名
-        print("projectName:", output)
+        -- print("projectName:", output)
 
         -- 确保 build 目录存在
         vim.fn.mkdir(output_dir, "p")
         -- 生成 CMakeLists.txt 文件
-        print("CMakeLists.txt_path: ", output)
+        -- print("CMakeLists.txt_path: ", output)
         -- 检查 CMakeLists.txt 文件是否存在，如果不存在则生成默认的
         local cmake_file_path = cwd .. "/CMakeLists.txt"
         if vim.fn.filereadable(cmake_file_path) == 0 then
-          print("CMakeLists.txt not found, generating default CMakeLists.txt")
+          -- print("CMakeLists.txt not found, generating default CMakeLists.txt")
           generate_cmake_file(output)
         else
-          print("CMakeLists.txt is already exist!")
+          -- print("CMakeLists.txt is already exist!")
         end
         local compile_cmd = string.format("cd %s && cmake -B %s -S . && cmake --build %s", cwd, output_dir, output_dir)
         local run_cmd = string.format("cd %s && ./%s/%s", cwd, output_dir, output)
