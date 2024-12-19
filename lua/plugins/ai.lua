@@ -5,7 +5,7 @@ return {
     cmd = { "LLMSesionToggle", "LLMSelectedTextHandler" },
     config = function()
       require("llm").setup({
-        max_tokens = 512,
+        max_tokens = 1024,
         url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
         model = "glm-4-flash",
         prefix = {
@@ -13,7 +13,7 @@ return {
           assistant = { text = "⚡ ", hl = "Added" },
         },
 
-        save_session = false,
+        save_session = true,
         max_history = 15,
 
         -- stylua: ignore

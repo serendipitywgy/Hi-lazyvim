@@ -45,6 +45,8 @@ local catppuccin_config = {
           LspReferenceText = { bg = u.blend(colors.surface2, colors.base, 0.8) },
           LspReferenceWrite = { bg = u.blend(colors.surface2, colors.base, 0.8) },
           LspReferenceRead = { bg = u.blend(colors.surface2, colors.base, 0.8) },
+          -- 自定义 Visual 模式的高亮，使其在透明背景下更为显眼
+          Visual = { bg = u.blend(colors.blue, colors.base, 0.5) },
         }
       end,
     })
