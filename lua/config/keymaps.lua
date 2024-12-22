@@ -23,4 +23,7 @@ vim.keymap.set("t", "kj", "<C-\\>", { silent = true })
 -- end
 -- vim.keymap.set({ "n", "i", "v" }, "<F5>", run_conan_build, { desc = "Run Conan Build" })
 
-vim.keymap.set("n", "<leader>rn", ":IncRename ")
+-- vim.keymap.set("n", "<leader>rn", ":IncRename ")
+vim.keymap.set("n", "<leader>rn", function()
+  return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true })
