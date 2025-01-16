@@ -156,8 +156,8 @@ return {
           conan_build:toggle()
         elseif has_cmakelist then
           -- 使用 CMake Tools 插件的命令
-          -- vim.cmd("CMakeRun")
-          compile_and_run_cpp()
+          vim.cmd("CMakeRun")
+          -- compile_and_run_cpp()
         else
           -- print("No conanfile.py or CMakeLists.txt found in the project directory.")
           -- 编译和运行 C++ 文件

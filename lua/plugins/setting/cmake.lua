@@ -79,7 +79,6 @@ return {
         close_on_exit = false, -- whether close the terminal when exit
         singleton = true, -- single instance, autocloses the opened one, if present
         auto_scroll = false, -- whether auto scroll to the bottom
-        size = 40,
       },
       overseer = {},
       terminal = {
