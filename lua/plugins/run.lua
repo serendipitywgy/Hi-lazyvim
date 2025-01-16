@@ -165,7 +165,7 @@ return {
         end
       end
       -- 简化在多个 Vim 模式下设置相同键位映射的过程
-      function set_keymap_multi_mode(modes, lhs, rhs, opts)
+      local function set_keymap_multi_mode(modes, lhs, rhs, opts)
         for _, mode in ipairs(modes) do
           vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
         end
