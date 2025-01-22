@@ -1,5 +1,5 @@
 return {
-  "Civitasv/cmake-tools.nvim",
+  "serendipitywgy/cmake-tools.nvim",
   lazy = false,
-  opts = require("plugins.setting.cmake"),
+  opts = require("plugins.plugin_config.cmake-tool.cmake"),
 }

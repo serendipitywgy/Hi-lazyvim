@@ -3,6 +3,6 @@ return {
   version = "*",
   event = "VeryLazy",
   config = function()
-    require("plugins.setting.toggleterm_config").setup()
+    require("plugins.plugin_config.toggleterm_config").setup()
   end,
 }

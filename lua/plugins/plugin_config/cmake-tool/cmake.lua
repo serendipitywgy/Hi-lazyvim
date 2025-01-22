@@ -1,3 +1,4 @@
+local config_path = vim.fn.stdpath("config") .. "/lua/plugins/plugin_config/cmake-tool" -- vim.fn.stdpath('config') 将返回 ~/.config/nvim
 return {
   cmake_command = "cmake", -- this is used to specify cmake command path
   cmake_regenerate_on_save = false, -- auto generate when save CMakeLists.txt

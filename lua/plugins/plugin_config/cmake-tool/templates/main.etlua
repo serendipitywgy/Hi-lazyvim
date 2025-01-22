@@ -1,0 +1,6 @@
+#include <iostream>
+
+int main(int argc, char** argv){
+    std::cout << "Hello, from <%= project_name %>!\n";
+    std::cout << "你好，世界" << "\n";
+}
