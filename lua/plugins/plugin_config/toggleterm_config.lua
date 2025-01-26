@@ -76,8 +76,41 @@ function M.setup() --function M.setup() 定义了一个名为 setup 的函数，
     border = "double",
     width = 110,
   })
+  -- QML 运行终端
+  local qml_run = nil
 
-  -- 智能构建函数
+  -- 创建 QML 运行终端的函数
+  local function create_qml_run_terminal()
+    local current_file = vim.fn.expand("%:p")
+    if current_file:match("%.qml$") then
+      qml_run = Terminal:new({
+        cmd = "qml6 " .. current_file,
+        hidden = true,
+        direction = "vertical",
+        float_opts = {
+          border = "double",
+          width = 110,
+        },
+        on_open = function(term)
+          vim.cmd("startinsert!")
+          vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+        end,
+        on_close = function(_)
+          vim.cmd("startinsert!")
+        end,
+        on_exit = function(term, job_id, exit_code, event)
+          if exit_code == 0 then
+            term:close()
+          end
+        end,
+      })
+      qml_run:toggle() -- 确保终端被正确打开
+    else
+      print("当前文件不是 QML 文件")
+    end
+  end
+
+  --智能构建函数
   function _G.smart_build()
     vim.cmd("wa")
     local cwd = vim.fn.getcwd()
@@ -88,6 +121,8 @@ function M.setup() --function M.setup() 定义了一个名为 setup 的函数，
       conan_build:toggle()
     elseif has_cmakelist then
       vim.cmd("CMakeRun")
+    else
+      create_qml_run_terminal()
     end
   end
 
