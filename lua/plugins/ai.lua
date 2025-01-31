@@ -117,9 +117,14 @@ return {
       })
     end,
     keys = {
-      { "<leader>ac", mode = "n", "<cmd>LLMSessionToggle<cr>" },
-      { "<leader>ae", mode = "v", "<cmd>LLMSelectedTextHandler 请解释下面这段代码<cr>" },
-      { "<leader>t", mode = "x", "<cmd>LLMSelectedTextHandler 英译汉<cr>" },
+      { "<leader>ac", mode = "n", "<cmd>LLMSessionToggle<cr>", desc = "LLMSessionToggle" },
+      {
+        "<leader>ae",
+        mode = "v",
+        "<cmd>LLMSelectedTextHandler 请解释下面这段代码<cr>",
+        desc = "explain code",
+      },
+      { "<leader>t", mode = "x", "<cmd>LLMSelectedTextHandler 英译汉<cr>", desc = "englinsh to chinse" },
     },
   },
 }

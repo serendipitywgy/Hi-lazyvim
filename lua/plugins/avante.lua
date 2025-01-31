@@ -10,7 +10,7 @@ return {
         ollama = {
           __inherited_from = "openai",
           api_key_name = "LLM_KEY",
-          endpoint = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+          endpoint = "https://open.bigmodel.cn/api/paas/v4/",
           model = "GLM-4-Flash",
         },
       },
