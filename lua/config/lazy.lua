@@ -51,6 +51,3 @@ require("lazy").setup({
     },
   },
 })
-
--- Load custom LSP
-require("config.lsp")
