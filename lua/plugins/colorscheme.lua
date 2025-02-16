@@ -1,6 +1,6 @@
 -- 定义 catppuccin 配置
 local catppuccin_config = {
-  transparent_background = true, -- 启用透明背景
+  transparent_background = false, -- 启用透明背景
   custom_highlights = function(colors)
     local u = require("catppuccin.utils.colors")
     return {

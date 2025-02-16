@@ -121,6 +121,11 @@ return {
             filetypes = { "qml", "qmljs" },
             single_file_support = true,
           },
+          clangd = {
+            keys = {
+              { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+            },
+          },
         },
 
         -- you can do any additional lsp server setup here
