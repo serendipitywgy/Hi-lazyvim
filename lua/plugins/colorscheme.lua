@@ -1,6 +1,6 @@
 -- 定义 catppuccin 配置
 local catppuccin_config = {
-  transparent_background = false, -- 启用透明背景
+  transparent_background = true, -- 启用透明背景
   custom_highlights = function(colors)
     local u = require("catppuccin.utils.colors")
     return {
@@ -14,6 +14,8 @@ local catppuccin_config = {
       LspReferenceRead = { bg = u.blend(colors.surface2, colors.base, 0.8) },
       -- 自定义 Visual 模式的高亮，使其在透明背景下更为显眼
       Visual = { bg = u.blend(colors.blue, colors.base, 0.5) },
+      -- 自定义 LineNr 高亮组，使行号更加明显
+      LineNr = { fg = colors.overlay1 },
     }
   end,
   integrations = {
