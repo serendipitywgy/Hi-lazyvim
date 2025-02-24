@@ -8,6 +8,7 @@ return {
 
         -- 设置 Shift-Tab 键往上切换候选词
         ["<S-Tab>"] = { "select_prev", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
       },
     },
   },
