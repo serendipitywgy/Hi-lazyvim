@@ -17,8 +17,8 @@ return {
         --   return vim.env.GLM_TOKEN
         -- end,
         url = "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
-        model = "deepSeek-V3-241226",
-        api_type = "deepSeek-V3-241226",
+        model = "ep-20250226103242-mnd7v",
+        api_type = "deepSeek",
         max_tokens = 8000,
         fetch_key = function()
           return vim.env.DEEPSEEK_TOKEN
@@ -189,15 +189,15 @@ return {
                 virtual_text = {
                   accept = {
                     mode = "i",
-                    keys = "<a-a>",
+                    keys = "<A-a>",
                   },
                   next = {
                     mode = "i",
-                    keys = "<a-n>",
+                    keys = "<A-n>",
                   },
                   prev = {
                     mode = "i",
-                    keys = "<a-p>",
+                    keys = "<A-p>",
                   },
                   toggle = {
                     mode = "n",
