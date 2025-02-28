@@ -9,20 +9,20 @@ return {
 
       require("llm").setup({
         -- [[ GLM ]]
-        -- url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
-        -- model = "glm-4-flash",
-        -- api_type = "zhipu",
-        -- max_tokens = 8000,
-        -- fetch_key = function()
-        --   return vim.env.GLM_TOKEN
-        -- end,
-        url = "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
-        model = "ep-20250226103242-mnd7v",
-        api_type = "deepSeek",
+        url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+        model = "glm-4-flash",
+        api_type = "zhipu",
         max_tokens = 8000,
         fetch_key = function()
-          return vim.env.DEEPSEEK_TOKEN
+          return vim.env.GLM_TOKEN
         end,
+        -- url = "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+        -- model = "ep-20250226103242-mnd7v",
+        -- api_type = "deepSeek",
+        -- max_tokens = 8000,
+        -- fetch_key = function()
+        --   return vim.env.DEEPSEEK_TOKEN
+        -- end,
 
         temperature = 0.3,
         top_p = 0.7,
