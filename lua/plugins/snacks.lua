@@ -1,9 +1,6 @@
 return {
   "folke/snacks.nvim",
   event = "VeryLazy",
-  -- dependencies = {
-  --   "nvim-tree/nvim-web-devicons", -- 确保有图标支持
-  -- },
   opts = {
     dashboard = {
       sections = {
