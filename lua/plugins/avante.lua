@@ -5,9 +5,9 @@ return {
     lazy = true,
     version = false, -- set this if you want to always pull the latest change
     opts = {
-      provider = "ollama",
+      provider = "GLM",
       vendors = {
-        ollama = {
+        GLM = {
           __inherited_from = "openai",
           api_key_name = "LLM_KEY",
           endpoint = "https://open.bigmodel.cn/api/paas/v4/",
