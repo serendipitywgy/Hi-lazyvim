@@ -2,7 +2,13 @@ local config_path = vim.fn.stdpath("config") .. "/lua/plugins/plugin_config/cmak
 return {
   cmake_command = "cmake", -- this is used to specify cmake command path
   cmake_regenerate_on_save = false, -- auto generate when save CMakeLists.txt
-  cmake_generate_options = { "-GNinja", "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" }, -- this will be passed when invoke `CMakeGenerate`
+  -- cmake_generate_options = { "-GNinja", "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" }, -- this will be passed when invoke `CMakeGenerate`
+  cmake_generate_options = {
+    "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+    "-DCMAKE_BUILD_TYPE=Debug",
+    "-DCMAKE_CXX_FLAGS_DEBUG=-g -O0",
+    "-DCMAKE_C_FLAGS_DEBUG=-g -O0",
+  }, -- this will be passed when invoke `CMakeGenerate`
   cmake_build_options = {}, -- this will be passed when invoke `CMakeBuild`
   -- support macro expansion:
   --       ${kit}
